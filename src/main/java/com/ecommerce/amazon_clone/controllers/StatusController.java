@@ -13,7 +13,7 @@ public class StatusController {
     // É o guichê específico, ao acessar o GET em "api/status" você estará aqui :)
     @GetMapping("/status")
     public String checkStatus() {
-        return "API da Amazon Clone está funcionando corretamente!";
+        return "Amazon's Clone API is running!";
     }
     
 }
