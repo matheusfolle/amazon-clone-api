@@ -1,5 +1,6 @@
 package com.ecommerce.amazon_clone.services;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -18,13 +19,15 @@ public class FreightService {
     }
 
     public double calculateFreight(String freightType, Double weight) {
-        if (weight == null || weight < 0) {
-            throw new IllegalArgumentException(
-                "Invalid weight. Weight must be a non-negative value."
-            );
+        if (freightType == null || freightType.isBlank()) {
+            throw new IllegalArgumentException("Freight type is required.");
+        }
+
+        if (weight == null || !Double.isFinite(weight) || weight < 0) {
+            throw new IllegalArgumentException("Invalid weight. Weight must be a finite non-negative value.");
         }
         // Busca a estratégia correta com base no tipo de frete (freightType) e chama o método calculate da implementação correspondente.
-        CalculateChargesStrategy strategy = strategies.get(freightType.toUpperCase());
+        CalculateChargesStrategy strategy = strategies.get(freightType.trim().toUpperCase(Locale.ROOT));
 
         if (strategy == null) {
             throw new IllegalArgumentException("Freight type not supported by architecture.");
